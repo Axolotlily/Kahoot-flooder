@@ -1,0 +1,14 @@
+{
+  "name": "cuhoot",
+  "version": "1.0.0",
+  "description": "Make your Kahoot popular",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tika",
+  "license": "ISC",
+  "dependencies": {
+    "kahoot.js-updated": "^2.2.3"
+  }
+}
