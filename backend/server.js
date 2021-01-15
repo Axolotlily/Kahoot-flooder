@@ -2,16 +2,26 @@ const express = require('express');
 const app = express();
 const port = 4001;
 const { Worker } = require('worker_threads');
+const bottedRooms = new Map();
+const maxBots = 50;
 
-app.post('/:gamePin/:botNumber', (req, res) => {
+app.post('/api/:gamePin/:botNumber', (req, res) => {
   const { gamePin, botNumber } = req.params;
   console.log(gamePin, botNumber);
 
-  for (let i = 0; i < botNumber; i++) {
+  const amount = Math.min(
+    (bottedRooms.get(gamePin) ? bottedRooms.get(gamePin) : 0) + botNumber,
+    maxBots
+  );
+
+  for (let i = 0; i < amount; i++) {
     const worker = new Worker('./botworker.js');
     worker.postMessage(gamePin);
   }
-  res.send(200);
+
+  bottedRooms.set(gamePin, amount);
+
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {
