@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import { FormInput } from './components/FormInput';
+import { FormInput } from './components/FormInput/FormInput';
 
 export function App() {
     const [gamePin, setGamePin] = useState('');
     const [amount, setAmount] = useState('');
+    const [name, setName] = useState('');
     const [showNotifi, setShowNotifi] = useState(false);
     const [notification, setNotification] = useState(`Success! Sent ${amount} bots to Kahoot game: ${gamePin}`);
     
@@ -18,14 +19,24 @@ export function App() {
         } 
     }
 
+    function nameChange(val: string) {
+        if (val.length > 16) return;
+        if (val.includes(' ')) return;
+        setName(val)
+    }
+
     async function submit(e: React.FormEvent<HTMLFormElement>) {
         e.stopPropagation();
         e.preventDefault();
 
-        if (!gamePin || gamePin.length < 7) return alert('You have not entered a valid game pin')
+        if (!gamePin) return alert('You have not entered a valid game pin')
         if (!amount || parseInt(amount) === 0) return alert('You have not entered a valid amount')
+        if (!name) setName('cuh');
 
-        await fetch(`http://50b0632cce27.ngrok.io/api/${gamePin}/${amount}`, { method: 'POST' })
+        await fetch(`http://localhost:4001/api/${gamePin}/${amount}`, { method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ name }),
+        })
             .then((res) => {
                 console.log(res);
 
@@ -34,6 +45,7 @@ export function App() {
 
                     setAmount('');
                     setGamePin('');
+                    setName('');
                 } else if (res.status === 403) {
                     setNotification(`As you have already sent bots to this game pin (${gamePin}), you cannot send any more`)
                 }
@@ -55,10 +67,18 @@ export function App() {
                     placeholder='Example: 2799394'            
                     value={gamePin} 
                     inputType='normal'
-                    onPaste={(val) => gamePinChange(val)}
                     onChange={(val) => gamePinChange(val)}>
                         Game pin
                     </FormInput>
+
+                    <FormInput 
+                    placeholder='TonyStark'
+                    value={name}
+                    inputType='normal'
+                    onChange={(val) => nameChange(val)}>
+                        Bot name
+                    </FormInput>
+
                     <FormInput 
                     placeholder='Number from 1 - 50'
                     value={amount}

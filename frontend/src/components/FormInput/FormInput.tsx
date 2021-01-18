@@ -9,10 +9,9 @@ type Props = {
     min?: string,
     max?: string,
     onChange: (event: string) => void,
-    onPaste?: (event: string) => void,
 }
 
-export function FormInput ({ children, placeholder, value, onChange, inputType, min, max, onPaste }: Props) {
+export function FormInput ({ children, placeholder, value, onChange, inputType, min, max }: Props) {
     return (
         <div className='form-input-container'>
             <h1 className='form-input-title'>{children}</h1>

@@ -4,8 +4,10 @@ const Kahoot = require('kahoot.js-updated');
 const client = new Kahoot();
 
 parentPort.on('message', (e) => {
+  const { gamePin, name } = JSON.parse(e);
+
   console.log('Joining kahoot...');
-  client.join(e, 'bot' + Math.round(Math.random() * 10000));
+  client.join(gamePin, name + Math.round(Math.random() * 10000));
 
   client.on('Joined', () => {
     console.log('I joined the Kahoot!');

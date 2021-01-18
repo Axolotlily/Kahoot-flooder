@@ -7,9 +7,11 @@ const ips = new Map(); // IP : List<RoomID>
 const maxBots = 50;
 
 app.use(cors());
+app.use(express.json());
 
 app.post('/api/:gamePin/:botNumber', (req, res) => {
   const { gamePin, botNumber } = req.params;
+  const name = req.body.name;
   console.log(gamePin, botNumber);
 
   if (ips.has(req.ip) && ips.get(req.ip).includes(gamePin))
@@ -21,7 +23,7 @@ app.post('/api/:gamePin/:botNumber', (req, res) => {
     const worker = new Worker('./botworker.js');
 
     setTimeout(() => {
-      worker.postMessage(gamePin);
+      worker.postMessage(JSON.stringify({ gamePin, name }));
     }, 100);
   }
 
