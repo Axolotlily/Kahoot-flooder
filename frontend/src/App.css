@@ -1,0 +1,124 @@
+@import url("https://use.typekit.net/hvz0epl.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+
+:root {
+    --theme: #FF8A00;
+    --dark: #121212;
+    --highlight: #252525;
+    --grey: #A4A4A4;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    padding: 0;
+    margin: 0;
+    background-color: var(--dark);
+}
+
+.outer-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.centered-container {
+    padding: 5em;
+    height: calc(100vh - 10em);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    color: var(--theme);
+    font-family: futura-pt;
+    font-size: 5em;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.descriptor {
+    color: var(--grey);
+    font-size: 1em;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Hide ugly arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.action-button {
+    background-color: var(--theme);
+    border: none;
+    padding: 0.5em 3em;
+    transition: 0.2s;
+    border-radius: 0.5em;
+    margin-top: 3em;
+}
+
+.action-button:hover {
+    background-color: #ee0979;
+}
+
+.bot-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4em;
+}
+
+.success {
+    color: #98de5b;
+    font-size: 0.75em;
+    font-weight: 300;
+    transition: 1s;
+    word-wrap: normal;
+    text-align: center;
+    width: 25em;
+    animation-name: colorChange;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes colorChange {
+    0% {
+        color: #ee6055;
+      }
+      25% {
+        color: #60d394;
+      }
+      50% {
+        color: #aaf683;
+      }
+      75% {
+        color: #ffd97d;
+      }
+      100% {
+        color: #ff9b85;
+      }
+}
+
+.hide {
+    opacity: 0;
+}
+
+.show {
+    opacity: 1;
+}

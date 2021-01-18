@@ -1,11 +1,11 @@
-const { workerData, parentPort } = require('worker_threads');
+const { parentPort } = require('worker_threads');
 
 const Kahoot = require('kahoot.js-updated');
 const client = new Kahoot();
 
 parentPort.on('message', (e) => {
   console.log('Joining kahoot...');
-  client.join(e, 'bot' + Math.round(Math.random() * 1000));
+  client.join(e, 'bot' + Math.round(Math.random() * 10000));
 
   client.on('Joined', () => {
     console.log('I joined the Kahoot!');
@@ -22,5 +22,6 @@ parentPort.on('message', (e) => {
 
   client.on('QuizEnd', () => {
     console.log('The quiz has ended.');
+    parentPort.close();
   });
 });

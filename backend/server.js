@@ -1,25 +1,33 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = 4001;
 const { Worker } = require('worker_threads');
-const bottedRooms = new Map();
+const ips = new Map(); // IP : List<RoomID>
 const maxBots = 50;
+
+app.use(cors());
 
 app.post('/api/:gamePin/:botNumber', (req, res) => {
   const { gamePin, botNumber } = req.params;
   console.log(gamePin, botNumber);
 
-  const amount = Math.min(
-    (bottedRooms.get(gamePin) ? bottedRooms.get(gamePin) : 0) + botNumber,
-    maxBots
-  );
+  if (ips.has(req.ip) && ips.get(req.ip).includes(gamePin))
+    return res.sendStatus(403);
+
+  const amount = Math.min(botNumber, maxBots);
 
   for (let i = 0; i < amount; i++) {
     const worker = new Worker('./botworker.js');
-    worker.postMessage(gamePin);
+
+    setTimeout(() => {
+      worker.postMessage(gamePin);
+    }, 100);
   }
 
-  bottedRooms.set(gamePin, amount);
+  if (ips.has(req.ip)) {
+    ips.set(req.ip, [...ips.get(req.ip), gamePin]);
+  } else ips.set(req.ip, [gamePin]);
 
   res.sendStatus(200);
 });

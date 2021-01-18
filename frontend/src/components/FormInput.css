@@ -1,0 +1,22 @@
+.form-input-container {
+    margin-bottom: 1em;
+}
+
+.form-input-title {
+    font-size: 1em;
+}
+
+.form-input-input {
+    border: none;
+    padding: 5px 10px;
+    background-color: #252525;
+    transition-duration: 1s;
+    outline-color: #ee0979;
+    border-radius: 2px;
+    width: 15em;
+}
+
+.form-input-input:focus {
+    outline-style: solid;
+    outline-color: #FF8A00;
+}
