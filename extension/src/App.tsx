@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import './App.css';
+import * as React from "react";
+import "./App.css";
 import { FormInput } from './components/FormInput/FormInput';
 
-export function App() {
-    const [gamePin, setGamePin] = useState('');
-    const [amount, setAmount] = useState('');
-    const [name, setName] = useState('');
-    const [showNotifi, setShowNotifi] = useState(false);
-    const [notification, setNotification] = useState(`Success! Sent ${amount} bots to Kahoot game: ${gamePin}`);
+const App = () => {
+  const [gamePin, setGamePin] = React.useState('');
+    const [amount, setAmount] = React.useState('');
+    const [name, setName] = React.useState('');
+    const [showNotifi, setShowNotifi] = React.useState(false);
+    const [notification, setNotification] = React.useState(`Success! Sent ${amount} bots to Kahoot game: ${gamePin}`);
     
     function gamePinChange(val: string) {
         if (val.length <= 7) setGamePin(val)
@@ -55,15 +55,15 @@ export function App() {
             });
         setShowNotifi(true);
         setTimeout(() => {
-            setShowNotifi(false)
+          setShowNotifi(false);
 
-            // Fix spaces
-            setTimeout(() => setNotification(`Success! Sent ${amount} bots to Kahoot game: ${gamePin}`), 1000 /* Transistion delay*/);
+          // Fix spaces
+          setTimeout(() => setNotification(`Success! Sent ${amount} bots to Kahoot game: ${gamePin}`), 1000 /* Transistion delay*/);
 
         }, 3 * 1000); // 3s
     }
 
-    return (
+  return (
         <div className='outer-container'>
             <div className='centered-container'>
                 <h1 className='title'>Cuhoot!</h1>
@@ -100,4 +100,6 @@ export function App() {
             </div>
         </div>
     )
-}
+};
+
+export default App;
